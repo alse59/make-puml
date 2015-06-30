@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import util.StringDecorate;
-
 /*
  * クラス図のクラス部分を生成する
  */
@@ -28,14 +26,14 @@ public class ClassWriter {
 		depth++;
 		for (Class clazz : classes) {
 			//クラスの宣言部を生成する
-			pumlText.append(writeClassFirstLine(clazz));
+			writeClassFirstLine(clazz);
 			depth++;
 			//クラスの属性部分を生成する
-			pumlText.append(writePropertyPart(clazz.getProperties()));
+			writePropertyPart(clazz.getProperties());
 			//クラスの操作部分を生成する
-			pumlText.append(writeMethodPart(clazz.getMethods()));
+			writeMethodPart(clazz.getMethods());
 			depth--;
-			pumlText.append(writeTab());
+			writeTab();
 			//クラスの終了部分を生成する
 			pumlText.append("}\n");
 		}
@@ -60,18 +58,16 @@ public class ClassWriter {
 		 * 属性部分のPuml出力用テキストを生成する
 		 * @param property
 		 */
-		private StringBuilder writePropertyPart(List<Property> properties) {
-			if (properties == null) return null;
-			StringBuilder propertyText = new StringBuilder();
+		private void writePropertyPart(List<Property> properties) {
+			if (properties == null) return;
 			for (Property property : properties) {
 				nullCheck(property.getName(), "プロパティ名が見つかりません");
 				nullCheck(property.getDataType(), "プロパティ " + property.getName() + " のデータ型が見つかりません");
 				writeTab();
 				writeAccessModifier(property.getAccess());
 				writeStatus(property.getStats());
-				propertyText.append(property.getName() + ": " + property.getDataType() + "\n");
+				pumlText.append(property.getName() + ": " + property.getDataType() + "\n");
 			}
-			return propertyText;
 		}
 		
 		//深さに応じてタブテキストを生成する
@@ -85,60 +81,54 @@ public class ClassWriter {
 		 *  アクセス修飾子部分のPuml出力用テキストを生成する
 		 *  @param modifier
 		 */
-		public StringBuilder writeAccessModifier(AccessModifier modifier) {
-			StringBuilder amText = new StringBuilder();
+		private void writeAccessModifier(AccessModifier modifier) {
 			if (modifier != null) {
-				amText.append(modifier.getType());
+				pumlText.append(modifier.getType());
 			} else {
-				amText.append(" ");
+				pumlText.append(" ");
 			}
-			return amText;
 		}
 		
 		/**
 		 * ステータス部分のPuml出力用テキストを生成する
 		 * @param stats
 		 */
-		private StringBuilder writeStatus(Set<Status> stats) {
-			StringBuilder statusText = new StringBuilder();
+		private void writeStatus(Set<Status> stats) {
 			for (Status status: stats) {
-				statusText.append(StringDecorate.addTag(status.toString()));
+				pumlText.append("{" + status + "}");
 			}
-			return statusText;
 		}
 		/**
 		 * 操作部分のPuml出力用テキストを生成する
 		 * @param methods
 		 */
-		private StringBuilder writeMethodPart(List<Method> methods) {
-			StringBuilder methodText = new StringBuilder();
-			if (methods == null) return null;
+		private void writeMethodPart(List<Method> methods) {
+			if (methods == null) return;
 			for (Method method : methods) {
 				nullCheck(method.getName(), "メソッド名が見つかりません");
 				writeTab();
 				//アクセス修飾子
-				methodText.append(writeAccessModifier(method.getAccess()));
-//				if (method.getAccess() != null) methodText.append(method.getAccess().getType());
+				writeAccessModifier(method.getAccess());
+//				if (method.getAccess() != null) pumlText.append(method.getAccess().getType());
 				//ステータス
-				methodText.append(writeStatus(method.getStats()));
+				writeStatus(method.getStats());
 				//メソッド名
-				methodText.append(method.getName());
+				pumlText.append(method.getName());
 				//引数
 				StringBuilder paramText = new StringBuilder("");
 				if (method.getParams() != null) {
 					Map<DataType, String> params = method.getParams();
 					for (DataType key : params.keySet()) {
-						paramText.append(key.getType() + " " + params.get(key) + ", ");
+						paramText.append(key + " " + params.get(key) + ", ");
 					}
 					if (paramText.length() != 0) paramText.delete(paramText.length()-2, paramText.length());
 				}
-				methodText.append("(" + paramText + ")");
+				pumlText.append("(" + paramText + ")");
 				//: 戻り値
 				if (method.getReturnType() != null) {
-					methodText.append(": " + method.getReturnType().getType());
+					pumlText.append(": " + method.getReturnType());
 				}
-				methodText.append("\n");
+				pumlText.append("\n");
 			}
-			return methodText;
 		}
 }
