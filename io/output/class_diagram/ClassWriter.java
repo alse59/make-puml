@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 /*
  * クラス図のクラス部分を生成する
  */
@@ -23,7 +25,7 @@ public class ClassWriter {
 		List<Class> classes = classInfo.getClasses();
 		if (classes == null) return null;
 		
-		depth++;
+//		depth++;
 		for (Class clazz : classes) {
 			//クラスの宣言部を生成する
 			writeClassFirstLine(clazz);
@@ -119,14 +121,14 @@ public class ClassWriter {
 				if (method.getParams() != null) {
 					Map<DataType, String> params = method.getParams();
 					for (DataType key : params.keySet()) {
-						paramText.append(key + " " + params.get(key) + ", ");
+						paramText.append(key.getType() + " " + params.get(key) + ", ");
 					}
 					if (paramText.length() != 0) paramText.delete(paramText.length()-2, paramText.length());
 				}
 				pumlText.append("(" + paramText + ")");
 				//: 戻り値
 				if (method.getReturnType() != null) {
-					pumlText.append(": " + method.getReturnType());
+					pumlText.append(": " + method.getReturnType().getType());
 				}
 				pumlText.append("\n");
 			}

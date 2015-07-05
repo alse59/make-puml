@@ -6,6 +6,7 @@ public enum ClassType {
 	Class("class"), Abstract("abstract"), Interface("interface"), Enum("enum");
 	
 	ClassType(String type) {
+//		super(type);
 		this.type = type;
 	}
 	

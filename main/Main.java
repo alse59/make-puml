@@ -13,6 +13,8 @@ import io.part.Puml;
 import io.part.Status;
 
 import java.io.File;
+
+import util.StringUtils;
 public class Main {
 	public static void main(String[] args) {
 //		if (args.length != 1) {
@@ -57,5 +59,11 @@ public class Main {
 //		Puml puml2 = factory.generate(args[0]);
 		factory.generate(puml);
 		
+//		System.out.println(StringUtils.reverse("aiueokaki"));
+//		String s = new StringBuilder("aiueo").reverse().toString();
+//		System.out.println(s);
+		System.out.println(32 << 1);
+		int i = 32 << 1;
+		System.out.println(i);
 	}
 }
