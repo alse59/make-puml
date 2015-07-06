@@ -14,6 +14,8 @@ import io.part.Status;
 
 import java.io.File;
 
+import language.JapaneseLanguage;
+import language.Place;
 import util.StringUtils;
 public class Main {
 	public static void main(String[] args) {
@@ -54,16 +56,11 @@ public class Main {
 		puml.setTitle("Itemの例");
 		puml.addClass(item);
 		
+		String[] diagrams = {Place.CLASS_DIAGRAM, Place.SEQUENCE_DIAGRAM};
 		//アウトプット部分
-		DiagramFactory factory = DiagramFactory.getFactory("io.output.class_diagram.ClassDiagramFactory");
+		DiagramFactory factory = DiagramFactory.getFactory(diagrams[0]);
 //		Puml puml2 = factory.generate(args[0]);
 		factory.generate(puml);
 		
-//		System.out.println(StringUtils.reverse("aiueokaki"));
-//		String s = new StringBuilder("aiueo").reverse().toString();
-//		System.out.println(s);
-		System.out.println(32 << 1);
-		int i = 32 << 1;
-		System.out.println(i);
 	}
 }

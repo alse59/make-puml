@@ -27,17 +27,7 @@ public abstract class DiagramFactory {
 		return factory;
 	}
 	
-	public boolean generate(AbstractPuml file) {
-		if (file == null) return false;
-		output(file);
-		return true;
-	}
-	
-	/**
-	 * ファイルを出力するTemplete Method
-	 * @param file
-	 */
-	protected abstract void output(AbstractPuml file);
+	public abstract boolean generate(AbstractPuml file);
 	
 
 }

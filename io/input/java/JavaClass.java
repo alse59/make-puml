@@ -1,7 +1,7 @@
 package io.input.java;
 
-import io.input.factory.AbstractClass;
+import io.part.Class;
 
-public class JavaClass extends AbstractClass {
+public class JavaClass extends Class {
 	
 }

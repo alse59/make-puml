@@ -10,12 +10,22 @@ import java.util.concurrent.ArrayBlockingQueue;
  *
  */
 public class Class {
+	private String belongPackage;
+	
 	private String name;
 	private ClassType classType;
 	private List<Class> classes;
 	private List<Property> properties = new ArrayList<>();
 	private List<Method> methods = new ArrayList<>();
 	private List<Relation> relations = new ArrayList<>();
+	
+	public String getBelongPackage() {
+		return belongPackage;
+	}
+	public void setBelongPackage(String belongPackage) {
+		this.belongPackage = belongPackage;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -20,44 +20,33 @@ import java.util.Set;
  *
  */
 public class ClassDiagramGenerator extends DiagramGenerator {
-	private int depth;
-	private StringBuilder pumlText = new StringBuilder();
 	
 	/**
 	 * クラス図を生成する<br>
 	 * 
 	 */
 	@Override
-	protected void generate(Puml puml) {
-		
-		//タイトル部分を生成する
-		writeTitlePart(puml.getTitle());
+	protected void output(Puml puml) {
 		
 		//クラス部分を生成する
 		ClassWriter classWriter = new ClassWriter();
 		ClassInfo classInfo = new ClassInfo();
 		classInfo.setDepth(this.depth);
 		classInfo.setClasses(puml.getClasses());
-		pumlText.append(classWriter.write(classInfo));
+		buffer.append(classWriter.write(classInfo));
 		
 		//リレーション部分を生成する
 		
-		//エンド部分を生成する
-		pumlText.append("\n@enduml");
-		
-		
-		//TODO デバッグ用　あとで消す
-		System.out.println(pumlText);
 	}
 	
-	/**
-	 * タイトル部分のPuml出力用テキストを作成する
-	 * @param title
-	 */
-	private void writeTitlePart(String title) {
-		if (title == null) throw new NullPointerException("Pumlクラスのタイトルが存在しません");
-		
-		pumlText.append("@startuml{" + title + ".png}\n");
-		pumlText.append("title " + title + "\n\n");
-	}
+//	/**
+//	 * タイトル部分のPuml出力用テキストを作成する
+//	 * @param title
+//	 */
+//	private void writeTitlePart(String title) {
+//		if (title == null) throw new NullPointerException("Pumlクラスのタイトルが存在しません");
+//		
+//		buffer.append("@startuml{" + title + ".png}\n");
+//		buffer.append("title " + title + "\n\n");
+//	}
 }

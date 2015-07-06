@@ -18,5 +18,5 @@ public abstract class Factory {
 	
 	public abstract void create(File file);
 	
-	public abstract AbstractClass createClass();
+	public abstract io.part.Class createClass();
 }

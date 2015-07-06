@@ -13,14 +13,15 @@ public class ClassDiagramFactory extends DiagramFactory {
 	/**
 	 * ファイル出力ファイル(Puml)<br>
 	 * Pumlの情報を読み取ってPumlファイルを生成する<br>
-	 * Templete Method<br>
+	 * @return 
 	 */
 	@Override
-	protected void output(AbstractPuml file) {
-		if (!(file instanceof Puml)) return;
+	public boolean generate(AbstractPuml file) {
+		if (file == null || !(file instanceof Puml)) return false;
 		Puml puml = (Puml)file;
 		ClassDiagramGenerator generator = new ClassDiagramGenerator();
 		generator.generate(puml);
-		
+		//TODO 要修正
+		return true;
 	}
 }

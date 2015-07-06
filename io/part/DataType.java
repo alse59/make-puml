@@ -1,9 +1,9 @@
 package io.part;
 
 public enum DataType {
-	String("String"), Boolean("boolean"), Byte("byte"), Char("char"), Short("short"),
+	String("String"), Void("void"), Boolean("boolean"), Byte("byte"), Char("char"), Short("short"),
 	Int("int"), Long("long"), Float("float"), Double("double"),
-	WrapBoolean("Boolean"), WrapByte("Byte"), WrapChar("Character"), WrapShort("Short"),
+	WrapVoid("Void"), WrapBoolean("Boolean"), WrapByte("Byte"), WrapChar("Character"), WrapShort("Short"),
 	WrapInt("Integer"), WrapLong("Long"), WrapFloat("Float"), WrapDouble("Double");
 	private String type;
 	DataType(String type) {

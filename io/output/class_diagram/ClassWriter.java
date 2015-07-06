@@ -19,8 +19,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ClassWriter {
 	private int depth;
-	private StringBuilder pumlText = new StringBuilder();
-	public StringBuilder write(ClassInfo classInfo) {
+	private StringBuffer buffer = new StringBuffer();
+	public String write(ClassInfo classInfo) {
 		this.depth = classInfo.getDepth();
 		List<Class> classes = classInfo.getClasses();
 		if (classes == null) return null;
@@ -37,9 +37,9 @@ public class ClassWriter {
 			depth--;
 			writeTab();
 			//クラスの終了部分を生成する
-			pumlText.append("}\n");
+			buffer.append("}\n");
 		}
-		return pumlText;
+		return buffer.toString();
 	}
 	
 	// クラスの１行目を生成する
@@ -48,7 +48,7 @@ public class ClassWriter {
 //			String className = clazz.getName();
 			ClassType classType = (ClassType)nullCheck(clazz.getClassType(), "クラス " + className + " のクラスタイプが見つかりません");
 			writeTab();
-			pumlText.append(classType.getType() + " \"" + className + "\" {\n");
+			buffer.append(classType.getType() + " \"" + className + "\" {\n");
 		}
 		
 		private Object nullCheck(Object target, String text) {
@@ -68,14 +68,14 @@ public class ClassWriter {
 				writeTab();
 				writeAccessModifier(property.getAccess());
 				writeStatus(property.getStats());
-				pumlText.append(property.getName() + ": " + property.getDataType() + "\n");
+				buffer.append(property.getName() + ": " + property.getDataType() + "\n");
 			}
 		}
 		
 		//深さに応じてタブテキストを生成する
 		private void writeTab() {
 			for (int i = 0; i < depth; i++) {
-				pumlText.append("\t");
+				buffer.append("\t");
 			}
 		}
 		
@@ -85,9 +85,9 @@ public class ClassWriter {
 		 */
 		private void writeAccessModifier(AccessModifier modifier) {
 			if (modifier != null) {
-				pumlText.append(modifier.getType());
+				buffer.append(modifier.getType());
 			} else {
-				pumlText.append(" ");
+				buffer.append(" ");
 			}
 		}
 		
@@ -97,7 +97,7 @@ public class ClassWriter {
 		 */
 		private void writeStatus(Set<Status> stats) {
 			for (Status status: stats) {
-				pumlText.append("{" + status + "}");
+				buffer.append("{" + status + "}");
 			}
 		}
 		/**
@@ -115,9 +115,9 @@ public class ClassWriter {
 				//ステータス
 				writeStatus(method.getStats());
 				//メソッド名
-				pumlText.append(method.getName());
+				buffer.append(method.getName());
 				//引数
-				StringBuilder paramText = new StringBuilder("");
+				StringBuffer paramText = new StringBuffer("");
 				if (method.getParams() != null) {
 					Map<DataType, String> params = method.getParams();
 					for (DataType key : params.keySet()) {
@@ -125,12 +125,12 @@ public class ClassWriter {
 					}
 					if (paramText.length() != 0) paramText.delete(paramText.length()-2, paramText.length());
 				}
-				pumlText.append("(" + paramText + ")");
+				buffer.append("(" + paramText + ")");
 				//: 戻り値
 				if (method.getReturnType() != null) {
-					pumlText.append(": " + method.getReturnType().getType());
+					buffer.append(": " + method.getReturnType().getType());
 				}
-				pumlText.append("\n");
+				buffer.append("\n");
 			}
 		}
 }
